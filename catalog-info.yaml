@@ -1,0 +1,39 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: backstage-system
+  description: System grouping for the Backstage deployment and related resources.
+spec:
+  owner: user:default/jitendra-gupta
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backstage
+  description: Backstage app and configuration repository.
+  annotations:
+    github.com/project-slug: jitu028/backstage
+    backstage.io/techdocs-ref: dir:.
+  tags:
+    - platform-engineering
+    - developer-portal
+    - backstage
+spec:
+  type: service
+  lifecycle: experimental
+  owner: user:default/jitendra-gupta
+  system: backstage-system
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: backstage-config
+  description: Configuration and runtime resources for the Backstage deployment.
+spec:
+  type: configuration
+  owner: user:default/jitendra-gupta
+  system: backstage-system
+  dependsOn:
+    - component:default/backstage
